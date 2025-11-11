@@ -1,0 +1,57 @@
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+
+@theme {
+    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+        'Segoe UI Symbol', 'Noto Color Emoji';
+}
+
+/* Brand palette based on #29343d */
+:root {
+  --brand-100: #eef3f6;
+  --brand-200: #d7dee5;
+  --brand-300: #b8c3cc;
+  --brand-400: #8fa2af;
+  --brand-500: #6f8695;
+  --brand-600: #4f6575;
+  --brand-700: #3f505e;
+  --brand-800: #33434e;
+  --brand-900: #29343d; /* base */
+}
+
+/* Subtle brand backgrounds for cards */
+.bg-brand-primary-subtle {
+  background-color: var(--brand-800);
+}
+
+.bg-brand-secondary-subtle {
+  background-color: var(--brand-700);
+}
+
+/* Brand text helpers */
+.text-brand-contrast {
+  color: var(--brand-100);
+}
+
+.text-brand-muted {
+  color: var(--brand-300);
+}
+
+/* Dashboard: reduzir card inicial em 30% */
+.dashboard-scale-70 {
+  transform: scale(0.7);
+  transform-origin: top left;
+}
+/* Dashboard welcome card: structural compact (approx. 30%) */
+.dashboard-welcome .card-body { padding: 0.35rem 0.7rem 0.7rem; }
+.dashboard-welcome .hstack { gap: 0.5rem !important; }
+.dashboard-welcome h3 { font-size: 0.64rem; }
+.dashboard-welcome h5 { font-size: 0.875rem; }
+.dashboard-welcome h5 { margin-top: 0 !important; }
+.dashboard-welcome h4 { font-size: 1.05rem; }
+.dashboard-welcome .round-48 { width: 33.6px; height: 33.6px; }
+.dashboard-welcome img { width: 126px !important; height: 126px !important; object-fit: contain; }

@@ -1,0 +1,176 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>iTAG Realtime Demo - Monitoramento de Alunos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background: #f5f5f5;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        .controls {
+            margin: 20px 0;
+        }
+
+        button {
+            padding: 10px 20px;
+            margin-right: 10px;
+            font-size: 14px;
+            cursor: pointer;
+            border: none;
+            border-radius: 4px;
+        }
+
+        #on {
+            background: #28a745;
+            color: white;
+        }
+
+        #off {
+            background: #dc3545;
+            color: white;
+        }
+
+        #on:hover {
+            background: #218838;
+        }
+
+        #off:hover {
+            background: #c82333;
+        }
+
+        #out {
+            border: 1px solid #ccc;
+            padding: 15px;
+            height: 500px;
+            overflow-y: auto;
+            background: white;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+        }
+
+        .event-line {
+            margin: 8px 0;
+            padding: 8px;
+            border-left: 3px solid #007bff;
+            background: #f8f9fa;
+        }
+
+        .event-time {
+            color: #666;
+            font-weight: bold;
+        }
+
+        .event-student {
+            color: #28a745;
+            font-weight: bold;
+            margin-top: 4px;
+        }
+
+        .event-details {
+            color: #555;
+            margin-top: 2px;
+        }
+
+        .event-unknown {
+            border-left-color: #ffc107;
+        }
+
+        .status {
+            padding: 10px;
+            background: #e3f2fd;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>🏷️ iTAG Realtime - Monitoramento de Alunos</h1>
+        <div class="status">
+            <strong>Status:</strong> <span id="status">Aguardando conexão...</span>
+        </div>
+        <div class="controls">
+            <button id="on">▶️ Iniciar Monitoramento</button>
+            <button id="off">⏸️ Parar Monitoramento</button>
+            <button id="clear">🗑️ Limpar Tela</button>
+        </div>
+        <div id="out"></div>
+    </div>
+
+    <script>
+        const out = document.getElementById('out');
+        const status = document.getElementById('status');
+
+        document.getElementById('on').onclick = async () => {
+            const res = await fetch('/api/itag/start', { method: 'POST' });
+            const data = await res.json();
+            status.textContent = 'Monitoramento iniciado ✅';
+            status.style.color = '#28a745';
+        };
+
+        document.getElementById('off').onclick = async () => {
+            const res = await fetch('/api/itag/stop', { method: 'POST' });
+            const data = await res.json();
+            status.textContent = 'Monitoramento pausado ⏸️';
+            status.style.color = '#dc3545';
+        };
+
+        document.getElementById('clear').onclick = () => {
+            out.innerHTML = '';
+        };
+
+        const es = new EventSource('/api/itag/stream');
+
+        es.onopen = () => {
+            status.textContent = 'Conectado e aguardando leituras... 🟢';
+            status.style.color = '#007bff';
+        };
+
+        es.addEventListener('tag', (e) => {
+            const d = JSON.parse(e.data);
+            const div = document.createElement('div');
+            div.className = d.student ? 'event-line' : 'event-line event-unknown';
+
+            let html = `<div class="event-time">[${d.time}]</div>`;
+            html += `<div>📡 EPC: ${d.epc} | RSSI: ${d.rssi ?? '-'} | Antena: ${d.antenna ?? '-'}</div>`;
+
+            if (d.student) {
+                html += `<div class="event-student">👤 ${d.student.name} (${d.student.code})</div>`;
+                html += `<div class="event-details">📚 Turma: ${d.student.class.name} | 🏫 Escola: ${d.student.school.name}</div>`;
+            } else {
+                html += `<div style="color: #ff9800; margin-top: 4px;">⚠️ Tag não cadastrada</div>`;
+            }
+
+            div.innerHTML = html;
+            out.insertBefore(div, out.firstChild);
+
+            // Limitar a 100 eventos na tela
+            if (out.children.length > 100) {
+                out.removeChild(out.lastChild);
+            }
+        });
+
+        es.onerror = () => {
+            status.textContent = 'Erro na conexão ou reconectando... 🔴';
+            status.style.color = '#dc3545';
+            console.log('SSE erro/reconnect…');
+        };
+    </script>
+</body>
+
+</html>
