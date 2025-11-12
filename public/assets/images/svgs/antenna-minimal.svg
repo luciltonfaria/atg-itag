@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="360" viewBox="0 0 480 360" role="img" aria-label="Antena captando sinal">
+  <!-- Paleta discreta e formas minimalistas -->
+  <rect width="480" height="360" fill="#ffffff"/>
+
+  <!-- Torre simples -->
+  <g stroke="#9ca3af" stroke-width="3" fill="none">
+    <line x1="240" y1="140" x2="240" y2="280" />
+    <line x1="220" y1="200" x2="260" y2="200" />
+    <line x1="225" y1="230" x2="255" y2="230" />
+    <line x1="230" y1="260" x2="250" y2="260" />
+  </g>
+
+  <!-- Cabeça da antena -->
+  <circle cx="240" cy="120" r="8" fill="#9ca3af" />
+
+  <!-- Base leve -->
+  <rect x="210" y="280" width="60" height="8" rx="3" fill="#cbd5e1" />
+
+  <!-- Ondas suaves, pouco contrastadas -->
+  <g fill="none" stroke="#60a5fa" stroke-linecap="round">
+    <path d="M240 120 C 280 120, 280 160, 240 160" stroke-width="4" opacity="0.6" />
+    <path d="M240 110 C 300 110, 300 170, 240 170" stroke-width="3" opacity="0.45" />
+    <path d="M240 100 C 320 100, 320 180, 240 180" stroke-width="2" opacity="0.35" />
+  </g>
+</svg>
