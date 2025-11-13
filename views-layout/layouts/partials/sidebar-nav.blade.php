@@ -64,11 +64,7 @@
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a class="sidebar-link" href="{{ route('tags.index') }}">
-                        <iconify-icon icon="solar:tag-line-duotone" class="icon-small"></iconify-icon>
-                        <span class="hide-menu">Crachás RFID / Tags</span>
-                    </a>
-                </li>
+                    
             </ul>
         </li>
 
@@ -77,7 +73,7 @@
         <!-- ===================================== -->
         <li class="sidebar-item">
             <a class="sidebar-link has-arrow" href="javascript:void(0)" aria-expanded="false">
-                <iconify-icon icon="solar:transmition-circle-line-duotone"></iconify-icon>
+                <iconify-icon icon="mdi:antenna"></iconify-icon>
                 <span class="hide-menu">Antenas e zonas</span>
             </a>
             <ul aria-expanded="false" class="collapse first-level">
@@ -120,12 +116,7 @@
                 <span class="hide-menu">Presenças</span>
             </a>
             <ul aria-expanded="false" class="collapse first-level">
-                <li class="sidebar-item">
-                    <a class="sidebar-link" href="{{ route('presences.daily') }}">
-                        <iconify-icon icon="solar:calendar-date-line-duotone" class="icon-small"></iconify-icon>
-                        <span class="hide-menu">Presenças diárias</span>
-                    </a>
-                </li>
+                
                 <li class="sidebar-item">
                     <a class="sidebar-link" href="{{ route('movements.live') }}">
                         <iconify-icon icon="solar:pulse-2-line-duotone" class="icon-small"></iconify-icon>
@@ -155,7 +146,7 @@
 
         <li class="sidebar-item">
             <a class="sidebar-link has-arrow" href="javascript:void(0)" aria-expanded="false">
-                <iconify-icon icon="solar:settings-line-duotone"></iconify-icon>
+                <iconify-icon icon="solar:users-group-rounded-line-duotone"></iconify-icon>
                 <span class="hide-menu">Administração</span>
             </a>
             <ul aria-expanded="false" class="collapse first-level">

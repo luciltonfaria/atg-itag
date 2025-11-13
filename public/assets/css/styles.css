@@ -39220,6 +39220,11 @@ pre.code-view code.hljs {
     transition: all .3s ease-out
 }
 
+/* Ensure space for the arrow on vertical sidebar items */
+.sidebar-nav ul .sidebar-item > .sidebar-link.has-arrow {
+    padding-right: 35px;
+}
+
 .sidebar-nav .has-arrow[aria-expanded=true]::after,
 .sidebar-nav li.active>.has-arrow::after,
 .sidebar-nav li>.has-arrow.active::after {

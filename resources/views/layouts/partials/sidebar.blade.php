@@ -38,7 +38,7 @@
                     <li class="mini-nav-item" id="mini-3">
                         <a href="javascript:void(0)" data-bs-toggle="tooltip" data-bs-custom-class="custom-tooltip"
                             data-bs-placement="right" data-bs-title="Antenas e zonas">
-                            <iconify-icon icon="solar:transmition-circle-line-duotone" class="fs-7"></iconify-icon>
+                            <iconify-icon icon="mdi:antenna" class="fs-7"></iconify-icon>
                         </a>
                     </li>
 
@@ -66,7 +66,7 @@
                     <li class="mini-nav-item" id="mini-5">
                         <a href="javascript:void(0)" data-bs-toggle="tooltip" data-bs-custom-class="custom-tooltip"
                             data-bs-placement="right" data-bs-title="Administração">
-                            <iconify-icon icon="solar:settings-line-duotone" class="fs-7"></iconify-icon>
+                            <iconify-icon icon="solar:users-group-rounded-line-duotone" class="fs-7"></iconify-icon>
                         </a>
                     </li>
 

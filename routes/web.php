@@ -7,6 +7,7 @@ use App\Http\Controllers\RelatorioController;
 use App\Http\Controllers\SystemLogController;
 use App\Http\Controllers\SchoolController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\PresencesController;
 
 // Redirect raiz para login
 Route::get('/', function () {
@@ -57,4 +58,8 @@ Route::middleware(['auth', \App\Http\Middleware\EnsureUserHasEscola::class])->gr
 
     // AJAX
     Route::get('/api/turmas/{turma}/alunos', [RelatorioController::class, 'getAlunosByTurma'])->name('turmas.alunos');
+
+    // Presenças: Histórico detalhado por aluno
+    Route::get('/presences/history', [PresencesController::class, 'history'])->name('movements.history');
+    Route::get('/presences/history/pdf', [PresencesController::class, 'historyPdf'])->name('movements.history.pdf');
 });

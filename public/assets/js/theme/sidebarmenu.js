@@ -51,59 +51,96 @@ if ((at = "vertical")) {
       }
 
       //****************************
-      // This is for the multilevel menu
+      // Multilevel menu: manter apenas uma categoria ativa/aberta
       //****************************
-      document.querySelectorAll("#sidebarnav a").forEach(function (link) {
-        link.addEventListener("click", function (e) {
-          const isActive = this.classList.contains("active");
-          const parentUl = this.closest("ul");
-          const navRoot = this.closest("nav");
+      // Clique nos cabeçalhos de categoria (has-arrow)
+      document
+        .querySelectorAll("#sidebarnav > li > a.has-arrow")
+        .forEach(function (header) {
+          header.addEventListener("click", function (e) {
+            e.preventDefault();
+            const navRoot = this.closest("nav");
+            const sideMenuRoot = document.querySelector(".sidebarmenu");
 
-          // ensure only the current group's header is marked active
-          if (navRoot) {
-            navRoot.querySelectorAll("a.has-arrow.active").forEach(function (header) {
-              header.classList.remove("active");
-              const headerSub = header.nextElementSibling;
-              if (headerSub) {
-                headerSub.classList.remove("in");
-              }
-            });
-          }
+            // Limpeza global: garante exclusividade da seleção em toda a sidebar
+            const cleanupRoot = sideMenuRoot || navRoot;
+            if (cleanupRoot) {
+              cleanupRoot
+                .querySelectorAll("#sidebarnav > li > ul.first-level.in")
+                .forEach(function (submenu) {
+                  submenu.classList.remove("in");
+                });
+              cleanupRoot
+                .querySelectorAll("#sidebarnav > li > a.has-arrow.active")
+                .forEach(function (a) {
+                  a.classList.remove("active");
+                });
+              cleanupRoot
+                .querySelectorAll("#sidebarnav .first-level a.sidebar-link.active")
+                .forEach(function (a) {
+                  a.classList.remove("active");
+                });
+              cleanupRoot
+                .querySelectorAll("#sidebarnav .sidebar-item.selected")
+                .forEach(function (sel) {
+                  sel.classList.remove("selected");
+                });
+            }
 
-          if (!isActive) {
-            // hide any open menus and remove all other classes
-            parentUl.querySelectorAll("ul").forEach(function (submenu) {
-              submenu.classList.remove("in");
-            });
-            parentUl.querySelectorAll("a").forEach(function (navLink) {
-              navLink.classList.remove("active");
-            });
-
-            // open our new menu and add the open class
+            // Abrir apenas o submenu da categoria clicada e marcar ativo
             const submenu = this.nextElementSibling;
-            if (submenu) {
+            if (submenu && submenu.classList.contains("first-level")) {
               submenu.classList.add("in");
             }
-
             this.classList.add("active");
-
-            // mark the header of this group as active
-            if (parentUl) {
-              const headerLink = parentUl.previousElementSibling;
-              if (headerLink && headerLink.classList.contains("has-arrow")) {
-                headerLink.classList.add("active");
-              }
-            }
-          } else {
-            this.classList.remove("active");
-            parentUl.classList.remove("active");
-            const submenu = this.nextElementSibling;
-            if (submenu) {
-              submenu.classList.remove("in");
-            }
-          }
+          });
         });
-      });
+
+      // Clique em links internos (itens das categorias)
+      document
+        .querySelectorAll("#sidebarnav .first-level a.sidebar-link")
+        .forEach(function (link) {
+          link.addEventListener("click", function () {
+            const navRoot = this.closest("nav");
+            const sideMenuRoot = document.querySelector(".sidebarmenu");
+            const firstLevel = this.closest("ul.first-level");
+            const header = firstLevel && firstLevel.previousElementSibling;
+
+            // Limpeza global: garante exclusividade em toda a sidebar
+            const cleanupRoot = sideMenuRoot || navRoot;
+            if (cleanupRoot) {
+              cleanupRoot
+                .querySelectorAll("#sidebarnav .first-level a.sidebar-link.active")
+                .forEach(function (a) {
+                  a.classList.remove("active");
+                });
+              cleanupRoot
+                .querySelectorAll("#sidebarnav > li > a.has-arrow.active")
+                .forEach(function (a) {
+                  a.classList.remove("active");
+                });
+              cleanupRoot
+                .querySelectorAll("#sidebarnav > li > ul.first-level.in")
+                .forEach(function (submenu) {
+                  submenu.classList.remove("in");
+                });
+              cleanupRoot
+                .querySelectorAll("#sidebarnav .sidebar-item.selected")
+                .forEach(function (sel) {
+                  sel.classList.remove("selected");
+                });
+            }
+
+            // Marcar apenas o item clicado e seu cabeçalho
+            this.classList.add("active");
+            if (header && header.classList.contains("has-arrow")) {
+              header.classList.add("active");
+            }
+            if (firstLevel) {
+              firstLevel.classList.add("in");
+            }
+          });
+        });
 
       document
         .querySelectorAll("#sidebarnav > li > a.has-arrow")
